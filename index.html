@@ -1,60 +1,309 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Display - Rao Jatin</title>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - OTP Verification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2c3e50;
+            --accent-color: #45a049;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }* {
+        box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      color: #fff;
-      font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        animation: fadeIn 1s ease;
     }
 
-    h1 {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 2.5rem;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
-    .image-container {
-      width: 90%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      margin: 40px 0;
+    .admin-panel {
+        background: linear-gradient(135deg, var(--secondary-color), #4ca1af);
+        color: var(--white);
+        padding: 15px 30px;
+        box-shadow: var(--shadow);
     }
 
-    .image-container img {
-      width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    .admin-panel h2 {
+        margin: 0;
+        font-weight: 600;
     }
 
-    @media (min-width: 768px) {
-      .image-container {
-        flex-direction: row;
+    .main-content {
+        flex: 1;
+        padding: 40px 20px;
+    }
+
+    .search-container {
+        text-align: center;
+        margin: 50px auto;
+        max-width: 600px;
+    }
+
+    .search-box {
+        display: flex;
         justify-content: center;
-      }
+        gap: 10px;
+        flex-wrap: wrap;
     }
-  </style>
+
+    #search-box {
+        padding: 12px 15px;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+    }
+
+    #search-button {
+        padding: 12px 25px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #search-button i {
+        margin-right: 8px;
+    }
+
+    #search-button::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.2);
+        transition: left 0.4s ease;
+    }
+
+    #search-button:hover::before {
+        left: 100%;
+    }
+
+    .otp-notification {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(12px);
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.3);
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+        transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        max-width: 500px;
+        width: 90%;
+    }
+
+    .otp-notification.show {
+        top: 20px;
+    }
+
+    .otp-content span {
+        font-weight: 600;
+    }
+
+    .otp-code {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        background-color: #eee;
+        padding: 5px 15px;
+        border-radius: 6px;
+        color: var(--secondary-color);
+    }
+
+    .copy-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    .close-notification {
+        background: none;
+        border: none;
+        font-size: 20px;
+        margin-left: auto;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .otp-form-container {
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 30px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.3);
+        box-shadow: var(--shadow);
+        text-align: center;
+        display: none;
+    }
+
+    .otp-form-container h3 {
+        color: var(--secondary-color);
+    }
+
+    #otp-input {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        text-align: center;
+        letter-spacing: 3px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    #submit-otp {
+        padding: 12px 25px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #submit-otp::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.2);
+        transition: left 0.4s ease;
+    }
+
+    #submit-otp:hover::before {
+        left: 100%;
+    }
+
+    footer {
+        background-color: var(--secondary-color);
+        color: var(--white);
+        text-align: center;
+        padding: 20px;
+    }
+
+    .handshake-animation {
+        display: inline-block;
+        animation: handshake 2s infinite;
+    }
+
+    @keyframes handshake {
+        0%, 100% { transform: rotate(0deg); }
+        20%, 60% { transform: rotate(-10deg); }
+        40%, 80% { transform: rotate(10deg); }
+    }
+
+    @media (max-width: 600px) {
+        #search-button, #submit-otp {
+            width: 100%;
+        }
+    }
+</style>
+
 </head>
 <body>
-  <h1>Images by Rao Jatin</h1>
-  <div class="image-container">
-    <img src="https://i.ibb.co/8LYDTqb4/Picsart-25-06-29-13-02-19-782.jpg" alt="Image 1" />
-    <img src="https://i.ibb.co/jkkX6yMZ/Picsart-25-06-29-13-00-00-743.png" alt="Image 2" />
-  </div>
+    <div class="admin-panel">
+        <h2>Admin Panel</h2>
+    </div><div class="main-content">
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="search-box" placeholder="Enter code word">
+            <button id="search-button"><i class="fas fa-shield-alt"></i>Verify</button>
+        </div>
+    </div>
+
+    <div class="otp-notification" id="otp-notification">
+        <div class="otp-content">
+            <span>Your OTP:</span>
+            <span class="otp-code" id="otp-display"></span>
+            <button class="copy-btn" id="copy-btn">Copy</button>
+        </div>
+        <button class="close-notification" id="close-notification">&times;</button>
+    </div>
+
+    <div class="otp-form-container" id="otp-form-container">
+        <h3>Enter OTP to Continue</h3>
+        <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6">
+        <button id="submit-otp">Submit</button>
+    </div>
+</div>
+
+<footer>
+    <div>Rao Developer <span class="handshake-animation"><i class="fas fa-handshake"></i></span></div>
+    <div>&copy; 2025 All Rights Reserved</div>
+</footer>
+
+<script>
+    document.getElementById('search-button').addEventListener('click', function() {
+        const value = document.getElementById('search-box').value.trim().toLowerCase();
+        if (value === 'shark_gym') {
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('otp-display').textContent = otp;
+            document.getElementById('otp-notification').classList.add('show');
+            document.getElementById('otp-form-container').style.display = 'block';
+            localStorage.setItem('otp', otp);
+            setTimeout(() => document.getElementById('otp-notification').classList.remove('show'), 30000);
+        }
+    });
+
+    document.getElementById('close-notification').onclick = () => {
+        document.getElementById('otp-notification').classList.remove('show');
+    };
+
+    document.getElementById('copy-btn').onclick = () => {
+        navigator.clipboard.writeText(document.getElementById('otp-display').textContent).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = 'Copy', 2000);
+        });
+    };
+
+    document.getElementById('submit-otp').onclick = () => {
+        const entered = document.getElementById('otp-input').value;
+        const real = localStorage.getItem('otp');
+        if (entered === real) window.location.href = 'Sharkgym.html';
+        else alert('Incorrect OTP. Try again.');
+    };
+</script>
+
 </body>
 </html>

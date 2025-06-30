@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHARK GYM - Train Hard, Stay Fit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+     [data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+        :root {
+            --primary: #ff5e14;
+            --dark: #1e1e1e;
+            --light: #ffffff;
+            --gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(30, 30, 30, 0.9);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 5%;
+            background-color: rgba(30, 30, 30, 0.95);
+        }
+        
+        .logo {
+            color: var(--light);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: var(--light);
+            font-size: 24px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1581009137042-c552e485697a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e04b0a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: var(--gray);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Facilities Section */
+        .facilities-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .facility-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .facility-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .facility-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .facility-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Membership Section */
+        .membership-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            background-color: var(--gray);
+            padding: 50px;
+            border-radius: 10px;
+        }
+        
+        .membership-card {
+            background-color: var(--light);
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .membership-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .membership-card.popular {
+            border: 2px solid var(--primary);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .membership-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .membership-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .membership-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        
+        /* Gallery Section */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--gray);
+        }
+        
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .testimonial-author h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-author p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-stars {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-text {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .contact-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .contact-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .contact-text p, .contact-text a {
+            color: #555;
+            text-decoration: none;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary);
+        }
+        
+        .map-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 5% 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-about p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 30px;
+                transition: all 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Countdown Timer */
+        .countdown {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 15px 30px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .countdown span {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">SHARK<span>GYM</span></a>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#membership">Membership</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1 data-aos="fade-up">SHARK GYM</h1>
+        <p data-aos="fade-up" data-aos-delay="100">Train Hard, Stay Fit</p>
+        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+            <a href="#membership" class="btn btn-primary">Join Now</a>
+            <a href="#contact" class="btn btn-secondary">Get Free Trial</a>
+        </div>
+        <div class="countdown" data-aos="fade-up" data-aos-delay="300">
+            Offer ends in: <span id="days">01</span>d <span id="hours">20</span>h <span id="minutes">10</span>m <span id="seconds">57</span>s
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-title" data-aos="fade-up">
+            <h2>About Us</h2>
+            <p>Learn more about our gym and what makes us different</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text" data-aos="fade-right">
+                <h3>Our Story</h3>
+                <p>Founded in 2015, SHARK GYM has been serving the fitness community with state-of-the-art facilities and expert trainers. What started as a small fitness center has now grown into one of the most reputable gyms in the area.</p>
+                <p>Our founder, John Shark, a former professional athlete, wanted to create a space where people of all fitness levels could come together to achieve their health goals in a supportive environment.</p>
+                <h3>Our Mission</h3>
+                <p>"Fitness for all" is not just our tagline - it's our philosophy. We believe everyone deserves access to quality fitness training and facilities, regardless of their current fitness level or experience.</p>
+            </div>
+            <div class="about-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=725&q=80" alt="Gym Owner">
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="facilities" id="facilities">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Facilities</h2>
+            <p>We provide world-class facilities to help you achieve your fitness goals</p>
+        </div>
+        <div class="facilities-container">
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="facility-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Strength Training</h3>
+                <p>Our gym is equipped with the latest strength training equipment from top brands to help you build muscle and increase strength.</p>
+            </div>
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="facility-icon">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <h3>Yoga & Flexibility</h3>
+                <p>Dedicated yoga studio with daily classes to improve your flexibility, balance, and mental well-being.</p>
+            </div>
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="facility-icon">
+                    <i class="fas fa-running"></i>
+                </div>
+                <h3>Cardio Equipment</h3>
+                <p>State-of-the-art cardio machines including treadmills, ellipticals, and stationary bikes with personalized workout programs.</p>
+            </div>
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="facility-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <h3>Clean Environment</h3>
+                <p>We maintain the highest standards of cleanliness with regular sanitization and cleaning throughout the day.</p>
+            </div>
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="facility-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3>Certified Trainers</h3>
+                <p>Our team of certified trainers are here to guide you with personalized workout plans and nutrition advice.</p>
+            </div>
+            <div class="facility-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="facility-icon">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <h3>Free WiFi & AC</h3>
+                <p>Enjoy free high-speed WiFi and workout in our fully air-conditioned facility for maximum comfort.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section class="membership" id="membership">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Membership Plans</h2>
+            <p>Choose the plan that fits your fitness journey</p>
+        </div>
+        <div class="membership-container">
+            <div class="membership-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>Basic</h3>
+                <div class="price">₹1500<span>/month</span></div>
+                <ul class="membership-features">
+                    <li>Access to gym facilities</li>
+                    <li>Free WiFi</li>
+                    <li>Locker access</li>
+                    <li>Basic workout plan</li>
+                    <li>1 Free trainer session</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Join Now</a>
+            </div>
+            <div class="membership-card popular" data-aos="fade-up" data-aos-delay="200">
+                <div class="popular-tag">Most Popular</div>
+                <h3>Premium</h3>
+                <div class="price">₹3000<span>/month</span></div>
+                <ul class="membership-features">
+                    <li>All Basic features</li>
+                    <li>Unlimited trainer sessions</li>
+                    <li>Personalized workout plan</li>
+                    <li>Nutrition guidance</li>
+                    <li>Access to all classes</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Join Now</a>
+            </div>
+            <div class="membership-card" data-aos="fade-up" data-aos-delay="300">
+                <h3>Annual</h3>
+                <div class="price">₹25000<span>/year</span></div>
+                <ul class="membership-features">
+                    <li>All Premium features</li>
+                    <li>2 Months Free</li>
+                    <li>Free gym merchandise</li>
+                    <li>Priority booking</li>
+                    <li>24/7 Access</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Join Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Gallery</h2>
+            <p>Take a look at our gym facilities and members in action</p>
+        </div>
+        <div class="gallery-container">
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80" alt="Gym Equipment">
+            </div>
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1031&q=80" alt="Personal Training">
+            </div>
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="300">
+                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Yoga Class">
+            </div>
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="400">
+                <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Cardio Area">
+            </div>
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="500">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Weight Training">
+            </div>
+            <div class="gallery-item" data-aos="fade-up" data-aos-delay="600">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Group Class">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title" data-aos="fade-up">
+            <h2>What Our Members Say</h2>
+            <p>Hear from our satisfied members about their experiences</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Member" class="testimonial-img">
+                    <div class="testimonial-author">
+                        <h4>Rajesh Kumar</h4>
+                        <p>Member since 2018</p>
+                    </div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"I've been a member at SHARK GYM for 5 years now and it's been an amazing journey. The trainers are knowledgeable and the facilities are always clean and well-maintained. I've achieved fitness goals I never thought possible!"</p>
+            </div>
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Member" class="testimonial-img">
+                    <div class="testimonial-author">
+                        <h4>Priya Sharma</h4>
+                        <p>Member since 2020</p>
+                    </div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">"The yoga classes at SHARK GYM have transformed both my physical and mental health. The instructors are patient and skilled, and the community is so welcoming. I look forward to every session!"</p>
+            </div>
+            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-header">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Member" class="testimonial-img">
+                    <div class="testimonial-author">
+                        <h4>Amit Patel</h4>
+                        <p>Member since 2021</p>
+                    </div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"After trying several gyms, I finally found my fitness home at SHARK GYM. The personal training program helped me lose 15kg in 6 months. The equipment is top-notch and there's always someone available to help with proper form."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Contact Us</h2>
+            <p>Get in touch to start your fitness journey today</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Address</h3>
+                        <p>123 Fitness Street, Health District, City - 560001</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Phone</h3>
+                        <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@sharkgym.com">info@sharkgym.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Working Hours</h3>
+                        <p>Mon–Sat: 5AM to 9PM</p>
+                        <p>Every Tuesday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container" data-aos="fade-left">
+              <iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3517.7258216433866!2d76.3969712!3d28.154833699999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3912a9aef82197b5%3A0x565233f9b616c503!2sShark%20Gym!5e0!3m2!1sen!2sin!4v1751118254678!5m2!1sen!2sin" 
+  width="100%" 
+  height="100%" 
+  style="border:0;" 
+  allowfullscreen="" 
+  loading="lazy" 
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">SHARK<span>GYM</span></div>
+                <p>Our mission is to provide a welcoming environment where people of all fitness levels can come together to achieve their health and wellness goals.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Personal Training</a></li>
+                    <li><a href="#">Group Classes</a></li>
+                    <li><a href="#">Yoga Sessions</a></li>
+                    <li><a href="#">Nutrition Guidance</a></li>
+                    <li><a href="#">Body Composition Analysis</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 SHARK GYM. All Rights Reserved. Powered By: <a href="https://www.raodevlopers.xyz" target="_blank">www.raodevlopers.xyz</a></p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        window.addEventListener('load', function () {
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    delay: 100
+  });
+});
+        
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $('.navbar').addClass('scrolled');
+            } else {
+                $('.navbar').removeClass('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        $('.menu-toggle').click(function() {
+            $('.nav-links').toggleClass('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        $('a[href*="#"]').on('click', function(e) {
+            e.preventDefault();
+            
+            $('html, body').animate(
+                {
+                    scrollTop: $($(this).attr('href')).offset().top - 70,
+                },
+                500,
+                'linear'
+            );
+            
+            // Close mobile menu if open
+            $('.nav-links').removeClass('active');
+        });
+        
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const offerEnd = new Date();
+            offerEnd.setDate(now.getDate() + 7); // Offer ends in 7 days
+            
+            const diff = offerEnd - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+    </script>
+</body>
+</html>
