@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Requirements Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: clamp(1rem, 3.5vw, 1.1rem);
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #printable {
+            display: none;
+            width: 100%;
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 10px auto;
+            padding: 15px;
+            background-color: white;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .print-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .print-header img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .print-header h2 {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            margin: 10px 0;
+        }
+        .print-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0 15px;
+        }
+        .print-footer img {
+            max-width: 100%;
+            height: auto;
+        }
+        .print-content {
+            margin: 20px 0;
+        }
+        .print-row {
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .print-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 3px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        .print-value {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            word-break: break-word;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .actions button {
+            width: auto;
+            min-width: 120px;
+            margin: 0;
+        }
+        #backButton {
+            background-color: #f44336;
+        }
+        #backButton:hover {
+            background-color: #d32f2f;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable, #printable * {
+                visibility: visible;
+            }
+            #printable {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 15mm;
+                box-shadow: none;
+            }
+            .actions {
+                display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            #printable {
+                padding: 10px;
+                min-height: auto;
+            }
+            .print-footer {
+                position: relative;
+                margin-top: 30px;
+                bottom: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Requirements Form</h1>
+        <form id="websiteForm">
+            <div class="form-group">
+                <label for="name">Enter your name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="mobile">Enter your mobile number:</label>
+                <div style="display: flex;">
+                    <span style="padding: 10px; background-color: #eee; border: 1px solid #ddd; border-right: none; border-radius: 4px 0 0 4px; font-size: clamp(0.9rem, 3vw, 1rem);">+91</span>
+                    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" style="border-radius: 0 4px 4px 0; flex-grow: 1;" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Enter your email address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="websiteType">Select which type of website you want:</label>
+                <select id="websiteType" name="websiteType" required>
+                    <option value="">-- Select --</option>
+                    <option value="Hotel website">Hotel website</option>
+                    <option value="Restaurant website">Restaurant website</option>
+                    <option value="School website">School website</option>
+                    <option value="Personal website">Personal website</option>
+                    <option value="E-commerce website">E-commerce website</option>
+                    <option value="Gym website">Gym website</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="clarification">Enter Your Clarification:</label>
+                <textarea id="clarification" name="clarification"></textarea>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="printable">
+        <div class="print-header">
+            <img src="https://i.ibb.co/HLfQRDGZ/Picsart-25-07-01-11-51-18-171.jpg" alt="Header Image" onerror="this.style.display='none'">
+            <h2>Website Requirements Details</h2>
+        </div>
+        
+        <div class="print-content" id="printContent">
+            <!-- Content will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="print-footer">
+            <img src="https://i.ibb.co/G4w0GhHq/Picsart-25-07-01-11-54-29-640.jpg" alt="Footer Image" onerror="this.style.display='none'">
+        </div>
+
+        <div class="actions">
+            <button id="printButton" onclick="window.print()">Downlode Form </button>
+            <button id="backButton" onclick="goBack()">Back to Form</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('websiteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('email').value;
+            const websiteType = document.getElementById('websiteType').value;
+            const clarification = document.getElementById('clarification').value;
+            
+            // Create printable content
+            const printContent = document.getElementById('printContent');
+            printContent.innerHTML = `
+                <div class="print-row">
+                    <div class="print-label">Name:</div>
+                    <div class="print-value">${name}</div>
+                </div>
+                <div class="print-row">
+                    <div class="print-label">Mobile Number:</div>
+                    <div class="print-value">+91 ${mobile}</div>
+                </div>
+                <div class="print-row">
+                    <div class="print-label">Email Address:</div>
+                    <div class="print-value">${email}</div>
+                </div>
+                <div class="print-row">
+                    <div class="print-label">Website Type:</div>
+                    <div class="print-value">${websiteType}</div>
+                </div>
+                <div class="print-row">
+                    <div class="print-label">Additional Clarification:</div>
+                    <div class="print-value">${clarification || 'N/A'}</div>
+                </div>
+            `;
+            
+            // Hide form and show printable area
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('printable').style.display = 'block';
+            
+            // Scroll to top of printable area
+            window.scrollTo(0, 0);
+        });
+
+        function goBack() {
+            document.getElementById('printable').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        
+        // Handle image loading errors
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.onerror = function() {
+                    this.style.display = 'none';
+                };
+            });
+        });
+    </script>
+</body>
+</html>
