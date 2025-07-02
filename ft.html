@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whack-a-Mole Arcade</title>
+    <meta name="theme-color" content="#3a8a2e">
+    <meta name="description" content="Fun Whack-a-Mole game with multiple modes and features">
+    <link rel="manifest" href="manifest.json">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Comic+Neue:wght@400;700&display=swap');
         
@@ -139,6 +142,7 @@
             bottom: 60%;
         }
         
+        /* Mole skins */
         .mole.helmet {
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23D2691E"/><circle cx="50" cy="45" r="30" fill="%23D2691E"/><circle cx="35" cy="40" r="5" fill="%23333"/><circle cx="65" cy="40" r="5" fill="%23333"/><path d="M40,60 Q50,70 60,60" fill="none" stroke="%23333" stroke-width="2"/><circle cx="50" cy="30" r="15" fill="%23666"/><path d="M35,25 Q50,10 65,25" fill="%23666"/></svg>');
         }
@@ -153,6 +157,22 @@
         
         .mole.sleepy {
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23D2691E"/><circle cx="50" cy="45" r="30" fill="%23D2691E"/><path d="M35,45 Q40,50 45,45" stroke="%23333" stroke-width="2" fill="none"/><path d="M55,45 Q60,50 65,45" stroke="%23333" stroke-width="2" fill="none"/><path d="M40,60 Q50,65 60,60" stroke="%23333" stroke-width="2" fill="none"/></svg>');
+        }
+        
+        .mole.ai {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%2342a5f5"/><circle cx="50" cy="45" r="30" fill="%2342a5f5"/><circle cx="35" cy="40" r="5" fill="%23333"/><circle cx="65" cy="40" r="5" fill="%23333"/><path d="M40,60 Q50,70 60,60" fill="none" stroke="%23333" stroke-width="2"/><circle cx="50" cy="30" r="10" fill="%23ffeb3b"/></svg>');
+        }
+        
+        .mole.pirate {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23D2691E"/><circle cx="50" cy="45" r="30" fill="%23D2691E"/><circle cx="35" cy="40" r="5" fill="%23333"/><circle cx="65" cy="40" r="5" fill="%23333" opacity="0.5"/><path d="M40,60 Q50,70 60,60" fill="none" stroke="%23333" stroke-width="2"/><rect x="30" y="25" width="40" height="10" fill="%23f44336"/><path d="M30,25 Q50,15 70,25" fill="%23f44336"/></svg>');
+        }
+        
+        .mole.ninja {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23333"/><circle cx="50" cy="45" r="30" fill="%23333"/><circle cx="35" cy="40" r="5" fill="%23fff"/><circle cx="65" cy="40" r="5" fill="%23fff"/><path d="M40,60 Q50,70 60,60" fill="none" stroke="%23fff" stroke-width="2"/><rect x="40" y="20" width="20" height="15" fill="%23f44336"/></svg>');
+        }
+        
+        .mole.emoji {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23FFD700"/><circle cx="35" cy="40" r="5" fill="%23333"/><circle cx="65" cy="40" r="5" fill="%23333"/><path d="M40,60 Q50,70 60,60" fill="none" stroke="%23333" stroke-width="2"/></svg>');
         }
         
         .controls {
@@ -206,6 +226,18 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
+        .btn-share {
+            background: linear-gradient(to bottom, #FF4081, #C2185B);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-download {
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
         .particle {
             position: absolute;
             width: 20px;
@@ -247,6 +279,8 @@
             max-width: 90%;
             width: 400px;
             border: 5px solid #8B4513;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .modal-title {
@@ -291,11 +325,111 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 5px;
         }
         
-        .btn-close:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        .modal-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #FFD700;
+            border-radius: 15px;
+            margin: 5px;
+            font-family: 'Comic Neue', cursive;
+            font-weight: bold;
+            border: 2px solid #FFA500;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            font-size: 18px;
+            color: #D2691E;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .challenge-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border: 3px dashed #FFA500;
+        }
+        
+        .challenge-title {
+            font-family: 'Luckiest Guy', cursive;
+            color: #8B4513;
+            margin-bottom: 5px;
+        }
+        
+        .challenge-desc {
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .powerup-active {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 215, 0, 0.8);
+            padding: 5px 15px;
+            border-radius: 20px;
+            z-index: 1000;
+            font-family: 'Luckiest Guy', cursive;
+            color: #8B4513;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mode-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .mode-btn {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 20px;
+            font-family: 'Luckiest Guy', cursive;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(to bottom, #FFD700, #FFA500);
+            color: #8B4513;
+            width: 80%;
+            max-width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
         @keyframes cloudMove {
@@ -321,8 +455,18 @@
             100% { transform: translateX(0); }
         }
         
+        @keyframes slowMotion {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
         .screen-shake {
             animation: screenShake 0.3s;
+        }
+        
+        .slow-motion {
+            animation: slowMotion 1s infinite;
         }
         
         /* Responsive adjustments */
@@ -348,6 +492,23 @@
             
             .score-value, .time-value, .level-value {
                 font-size: 18px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-title {
+                font-size: 24px;
+            }
+            
+            .modal-text {
+                font-size: 16px;
+            }
+            
+            .btn-close {
+                padding: 10px 20px;
+                font-size: 16px;
             }
         }
     </style>
@@ -387,16 +548,65 @@
         <div class="modal-content">
             <h2 class="modal-title">Game Over!</h2>
             <p class="modal-text">Your final score: <span id="finalScore">0</span></p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-value" id="avgReaction">0ms</div>
+                    <div class="stat-label">Avg Reaction</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="hitRate">0%</div>
+                    <div class="stat-label">Hit Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="helmetAccuracy">0%</div>
+                    <div class="stat-label">Helmet Accuracy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="molesHit">0</div>
+                    <div class="stat-label">Moles Hit</div>
+                </div>
+            </div>
+            
+            <h3 class="modal-title">Achievements</h3>
+            <div id="achievementsList"></div>
+            
             <h3 class="modal-title">High Scores</h3>
             <ul class="high-scores" id="highScoresList"></ul>
-            <button class="btn-close" id="closeModalBtn">Play Again</button>
+            
+            <div class="modal-buttons">
+                <button class="btn-close" id="closeModalBtn">Play Again</button>
+                <button class="btn-close btn-share" id="shareBtn">Share Score</button>
+                <button class="btn-close btn-download" id="downloadBtn">Download Scorecard</button>
+            </div>
         </div>
+    </div>
+    
+    <div class="modal" id="dailyChallengeModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Daily Challenge!</h2>
+            <div class="challenge-container">
+                <h3 class="challenge-title" id="challengeName">Challenge Name</h3>
+                <p class="challenge-desc" id="challengeDesc">Challenge description</p>
+            </div>
+            <p class="modal-text">Complete for bonus points!</p>
+            <button class="btn-close" id="startChallengeBtn">Start Challenge</button>
+        </div>
+    </div>
+    
+    <div class="mode-selector" id="modeSelector">
+        <h2 style="color: #FFD700; font-family: 'Luckiest Guy', cursive; margin-bottom: 30px; text-align: center;">Select Game Mode</h2>
+        <button class="mode-btn" id="classicModeBtn">Classic Mode</button>
+        <button class="mode-btn" id="dailyChallengeModeBtn">Daily Challenge</button>
+        <button class="mode-btn" id="twoPlayerModeBtn">2-Player Mode</button>
     </div>
     
     <audio id="popSound" src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" preload="auto"></audio>
     <audio id="missSound" src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" preload="auto"></audio>
     <audio id="bgMusic" loop src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" preload="auto"></audio>
+    <audio id="bonusSound" src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" preload="auto"></audio>
     
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Game elements
@@ -412,10 +622,26 @@
             const finalScoreDisplay = document.getElementById('finalScore');
             const highScoresList = document.getElementById('highScoresList');
             const closeModalBtn = document.getElementById('closeModalBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
             const popSound = document.getElementById('popSound');
             const missSound = document.getElementById('missSound');
             const bgMusic = document.getElementById('bgMusic');
+            const bonusSound = document.getElementById('bonusSound');
             const sky = document.getElementById('sky');
+            const dailyChallengeModal = document.getElementById('dailyChallengeModal');
+            const challengeName = document.getElementById('challengeName');
+            const challengeDesc = document.getElementById('challengeDesc');
+            const startChallengeBtn = document.getElementById('startChallengeBtn');
+            const modeSelector = document.getElementById('modeSelector');
+            const classicModeBtn = document.getElementById('classicModeBtn');
+            const dailyChallengeModeBtn = document.getElementById('dailyChallengeModeBtn');
+            const twoPlayerModeBtn = document.getElementById('twoPlayerModeBtn');
+            const achievementsList = document.getElementById('achievementsList');
+            const avgReactionDisplay = document.getElementById('avgReaction');
+            const hitRateDisplay = document.getElementById('hitRate');
+            const helmetAccuracyDisplay = document.getElementById('helmetAccuracy');
+            const molesHitDisplay = document.getElementById('molesHit');
             
             // Game variables
             let score = 0;
@@ -429,9 +655,85 @@
             let holes = [];
             let activeMoles = [];
             let highScores = JSON.parse(localStorage.getItem('whackamoleHighScores')) || [];
+            let achievements = JSON.parse(localStorage.getItem('whackamoleAchievements')) || [];
+            let unlockedSkins = JSON.parse(localStorage.getItem('whackamoleSkins')) || ['happy', 'angry', 'sleepy', 'helmet'];
+            let gameMode = 'classic'; // 'classic', 'daily', 'multiplayer'
+            let dailyChallenge = null;
+            let challengeCompleted = false;
+            let powerupActive = false;
+            let powerupEndTime = 0;
+            let powerupType = '';
+            let reactionTimes = [];
+            let molesAppeared = 0;
+            let molesWhacked = 0;
+            let helmetMolesWhacked = 0;
+            let helmetMolesAppeared = 0;
+            let lastMoleAppearanceTime = 0;
+            let player1Score = 0;
+            let player2Score = 0;
+            let currentPlayer = 1;
+            
+            // Daily challenges
+            const dailyChallenges = [
+                {
+                    name: "Angry Moles Only",
+                    description: "Only angry moles will appear for 30 seconds!",
+                    condition: (mole) => mole.classList.contains('angry'),
+                    duration: 30,
+                    bonus: 200
+                },
+                {
+                    name: "Helmet Off!",
+                    description: "No helmet moles will appear for 30 seconds!",
+                    condition: (mole) => !mole.classList.contains('helmet'),
+                    duration: 30,
+                    bonus: 150
+                },
+                {
+                    name: "Double Speed",
+                    description: "Moles appear twice as fast for 30 seconds!",
+                    condition: () => true,
+                    duration: 30,
+                    bonus: 100,
+                    speedMultiplier: 2
+                },
+                {
+                    name: "Sleepy Time",
+                    description: "Only sleepy moles will appear for 30 seconds!",
+                    condition: (mole) => mole.classList.contains('sleepy'),
+                    duration: 30,
+                    bonus: 200
+                }
+            ];
+            
+            // Achievements
+            const allAchievements = [
+                { id: 'first_blood', name: 'First Blood', desc: 'Whack your first mole', earned: false },
+                { id: 'speed_demon', name: 'Speed Demon', desc: 'Whack 3 moles in 1 second', earned: false },
+                { id: 'helmet_buster', name: 'Helmet Buster', desc: 'Whack 10 helmeted moles', earned: false },
+                { id: 'combo_master', name: 'Combo Master', desc: 'Whack 5 moles in a row without missing', earned: false },
+                { id: 'time_saver', name: 'Time Saver', desc: 'Hit an AI assistant mole', earned: false },
+                { id: 'level_up', name: 'Level Up!', desc: 'Reach level 5', earned: false },
+                { id: 'perfect_hit', name: 'Perfect Hit', desc: 'Achieve 100% hit rate in a game', earned: false },
+                { id: 'high_scorer', name: 'High Scorer', desc: 'Score over 1000 points', earned: false }
+            ];
             
             // Initialize game
             function initGame() {
+                // Reset game state
+                score = 0;
+                timeLeft = 60;
+                level = 1;
+                gameActive = false;
+                gamePaused = false;
+                challengeCompleted = false;
+                powerupActive = false;
+                reactionTimes = [];
+                molesAppeared = 0;
+                molesWhacked = 0;
+                helmetMolesWhacked = 0;
+                helmetMolesAppeared = 0;
+                
                 // Create holes
                 gameBoard.innerHTML = '';
                 holes = [];
@@ -453,8 +755,65 @@
                 // Create clouds and birds
                 createCloudsAndBirds();
                 
-                // Start game
-                startGame();
+                // Show mode selector
+                showModeSelector();
+            }
+            
+            // Show mode selector
+            function showModeSelector() {
+                modeSelector.style.display = 'flex';
+                gameContainer.style.display = 'none';
+                
+                // Load achievements
+                achievements = JSON.parse(localStorage.getItem('whackamoleAchievements')) || [];
+                
+                // Update achievements display
+                updateAchievementsDisplay();
+            }
+            
+            // Start game in selected mode
+            function startGame(mode) {
+                gameMode = mode;
+                modeSelector.style.display = 'none';
+                gameContainer.style.display = 'flex';
+                
+                if (gameMode === 'daily') {
+                    // Select random daily challenge
+                    dailyChallenge = dailyChallenges[Math.floor(Math.random() * dailyChallenges.length)];
+                    challengeName.textContent = dailyChallenge.name;
+                    challengeDesc.textContent = dailyChallenge.description;
+                    dailyChallengeModal.classList.add('active');
+                } else {
+                    // Start regular game
+                    prepareGame();
+                }
+            }
+            
+            // Prepare game after mode selection
+            function prepareGame() {
+                score = 0;
+                timeLeft = 60;
+                level = 1;
+                gameActive = true;
+                gamePaused = false;
+                
+                scoreDisplay.textContent = score;
+                timeDisplay.textContent = timeLeft;
+                levelDisplay.textContent = level;
+                
+                // Start timers
+                startTimer();
+                startMoleTimer();
+                
+                // Play background music
+                if (soundOn) {
+                    bgMusic.currentTime = 0;
+                    bgMusic.play().catch(e => console.log("Audio play error:", e));
+                }
+                
+                // Update button text
+                pauseBtn.textContent = 'Pause';
+                soundBtn.textContent = soundOn ? 'Sound On' : 'Sound Off';
             }
             
             // Create decorative clouds and birds
@@ -503,33 +862,6 @@
                 }
             }
             
-            // Start game
-            function startGame() {
-                score = 0;
-                timeLeft = 60;
-                level = 1;
-                gameActive = true;
-                gamePaused = false;
-                
-                scoreDisplay.textContent = score;
-                timeDisplay.textContent = timeLeft;
-                levelDisplay.textContent = level;
-                
-                // Start timers
-                startTimer();
-                startMoleTimer();
-                
-                // Play background music
-                if (soundOn) {
-                    bgMusic.currentTime = 0;
-                    bgMusic.play().catch(e => console.log("Audio play error:", e));
-                }
-                
-                // Update button text
-                pauseBtn.textContent = 'Pause';
-                soundBtn.textContent = soundOn ? 'Sound On' : 'Sound Off';
-            }
-            
             // Start game timer
             function startTimer() {
                 clearInterval(timer);
@@ -537,6 +869,11 @@
                     if (!gamePaused && gameActive) {
                         timeLeft--;
                         timeDisplay.textContent = timeLeft;
+                        
+                        // Check for powerup expiration
+                        if (powerupActive && Date.now() > powerupEndTime) {
+                            endPowerup();
+                        }
                         
                         if (timeLeft <= 0) {
                             endGame();
@@ -546,6 +883,12 @@
                         if (timeLeft % 15 === 0) {
                             levelUp();
                         }
+                        
+                        // Check for daily challenge completion
+                        if (gameMode === 'daily' && !challengeCompleted && 
+                            timeLeft <= (60 - dailyChallenge.duration)) {
+                            completeChallenge();
+                        }
                     }
                 }, 1000);
             }
@@ -553,7 +896,12 @@
             // Start mole timer
             function startMoleTimer() {
                 clearInterval(moleTimer);
-                const interval = Math.max(1000 - (level * 100), 300); // Faster with higher levels
+                let interval = Math.max(1000 - (level * 100), 300); // Faster with higher levels
+                
+                // Apply challenge speed multiplier if active
+                if (gameMode === 'daily' && !challengeCompleted && dailyChallenge.speedMultiplier) {
+                    interval = interval / dailyChallenge.speedMultiplier;
+                }
                 
                 moleTimer = setInterval(() => {
                     if (!gamePaused && gameActive) {
@@ -574,18 +922,60 @@
                     
                     // Create mole
                     const mole = document.createElement('div');
-                    const moleTypes = ['happy', 'angry', 'sleepy'];
-                    const randomType = moleTypes[Math.floor(Math.random() * moleTypes.length)];
                     
-                    // 20% chance to have a helmet
-                    const hasHelmet = Math.random() < 0.2;
+                    // Determine mole type based on game mode and conditions
+                    let moleType;
+                    if (gameMode === 'daily' && !challengeCompleted) {
+                        // In daily challenge mode, only create moles that match the challenge condition
+                        let validMole = false;
+                        let attempts = 0;
+                        
+                        while (!validMole && attempts < 10) {
+                            const types = ['happy', 'angry', 'sleepy'];
+                            moleType = types[Math.floor(Math.random() * types.length)];
+                            mole.className = `mole ${moleType}`;
+                            
+                            // Check if this mole meets challenge condition
+                            if (dailyChallenge.condition(mole)) {
+                                validMole = true;
+                            }
+                            attempts++;
+                        }
+                    } else {
+                        // Regular mole selection
+                        const types = ['happy', 'angry', 'sleepy'];
+                        moleType = types[Math.floor(Math.random() * types.length)];
+                        mole.className = `mole ${moleType}`;
+                        
+                        // 1% chance for AI mole
+                        if (Math.random() < 0.01) {
+                            mole.className = 'mole ai';
+                        }
+                        
+                        // 20% chance to have a helmet (except for AI mole)
+                        if (!mole.classList.contains('ai') && Math.random() < 0.2) {
+                            mole.classList.add('helmet');
+                            helmetMolesAppeared++;
+                        }
+                        
+                        // Random unlocked skin (10% chance for special skins)
+                        if (unlockedSkins.length > 4 && Math.random() < 0.1) {
+                            const skin = unlockedSkins[Math.floor(Math.random() * unlockedSkins.length)];
+                            if (['pirate', 'ninja', 'emoji'].includes(skin)) {
+                                mole.className = `mole ${skin}`;
+                            }
+                        }
+                    }
                     
-                    mole.className = `mole ${randomType} ${hasHelmet ? 'helmet' : ''}`;
                     hole.element.appendChild(mole);
                     
-                    // Set hits needed (2 for helmeted moles)
-                    hole.hitsNeeded = hasHelmet ? 2 : 1;
+                    // Set hits needed (2 for helmeted moles, 1 otherwise)
+                    hole.hitsNeeded = mole.classList.contains('helmet') ? 2 : 1;
                     hole.mole = mole;
+                    
+                    // Record appearance time for reaction time calculation
+                    lastMoleAppearanceTime = Date.now();
+                    molesAppeared++;
                     
                     // Show mole
                     setTimeout(() => {
@@ -593,7 +983,13 @@
                     }, 10);
                     
                     // Hide mole after random time
-                    const showTime = Math.max(1000 - (level * 50), 500); // Less time with higher levels
+                    let showTime = Math.max(1000 - (level * 50), 500); // Less time with higher levels
+                    
+                    // AI mole stays longer and gives bonus
+                    if (mole.classList.contains('ai')) {
+                        showTime = 2000;
+                    }
+                    
                     setTimeout(() => {
                         if (hole.mole === mole) { // Check if mole hasn't been whacked
                             hideMole(hole);
@@ -634,13 +1030,51 @@
                 const hole = holes[holeIndex];
                 
                 if (hole.mole) {
+                    // Calculate reaction time
+                    if (lastMoleAppearanceTime > 0) {
+                        const reactionTime = Date.now() - lastMoleAppearanceTime;
+                        reactionTimes.push(reactionTime);
+                    }
+                    
                     // Mole is hit
                     hole.hitsNeeded--;
                     
                     if (hole.hitsNeeded <= 0) {
                         // Mole is whacked
-                        score += 10 * level;
+                        let points = 10 * level;
+                        
+                        // Double points during powerup
+                        if (powerupActive && powerupType === 'doublePoints') {
+                            points *= 2;
+                        }
+                        
+                        score += points;
                         scoreDisplay.textContent = score;
+                        molesWhacked++;
+                        
+                        if (hole.mole.classList.contains('helmet')) {
+                            helmetMolesWhacked++;
+                        }
+                        
+                        // Check for achievements
+                        checkAchievements();
+                        
+                        // Special effects for AI mole
+                        if (hole.mole.classList.contains('ai')) {
+                            // Bonus time or prediction
+                            if (Math.random() < 0.5) {
+                                // Add bonus time
+                                timeLeft += 5;
+                                timeDisplay.textContent = timeLeft;
+                                showPowerupMessage("+5 SECONDS!");
+                            } else {
+                                // Show next mole location
+                                showNextMolePrediction();
+                            }
+                            
+                            // Achievement
+                            unlockAchievement('time_saver');
+                        }
                         
                         // Play sound
                         if (soundOn) {
@@ -681,6 +1115,29 @@
                     setTimeout(() => {
                         gameContainer.classList.remove('screen-shake');
                     }, 300);
+                }
+            }
+            
+            // Show next mole prediction (AI assistant feature)
+            function showNextMolePrediction() {
+                // Find holes without active moles
+                const availableHoles = holes.filter(hole => !hole.mole);
+                
+                if (availableHoles.length > 0) {
+                    // Choose a random hole
+                    const randomIndex = Math.floor(Math.random() * availableHoles.length);
+                    const hole = availableHoles[randomIndex];
+                    
+                    // Highlight the hole
+                    hole.element.style.boxShadow = '0 0 20px 10px rgba(66, 165, 245, 0.7)';
+                    hole.element.style.transition = 'box-shadow 0.3s';
+                    
+                    // Remove highlight after delay
+                    setTimeout(() => {
+                        hole.element.style.boxShadow = '';
+                    }, 2000);
+                    
+                    showPowerupMessage("LOOK HERE NEXT!");
                 }
             }
             
@@ -739,8 +1196,102 @@
                 level++;
                 levelDisplay.textContent = level;
                 
+                // Unlock skins based on level
+                if (level >= 3 && !unlockedSkins.includes('pirate')) {
+                    unlockedSkins.push('pirate');
+                    localStorage.setItem('whackamoleSkins', JSON.stringify(unlockedSkins));
+                    showPowerupMessage("NEW SKIN UNLOCKED: PIRATE!");
+                }
+                
+                if (level >= 5 && !unlockedSkins.includes('ninja')) {
+                    unlockedSkins.push('ninja');
+                    localStorage.setItem('whackamoleSkins', JSON.stringify(unlockedSkins));
+                    showPowerupMessage("NEW SKIN UNLOCKED: NINJA!");
+                    unlockAchievement('level_up');
+                }
+                
+                if (level >= 7 && !unlockedSkins.includes('emoji')) {
+                    unlockedSkins.push('emoji');
+                    localStorage.setItem('whackamoleSkins', JSON.stringify(unlockedSkins));
+                    showPowerupMessage("NEW SKIN UNLOCKED: EMOJI!");
+                }
+                
                 // Restart mole timer with new interval
                 startMoleTimer();
+            }
+            
+            // Complete daily challenge
+            function completeChallenge() {
+                challengeCompleted = true;
+                score += dailyChallenge.bonus;
+                scoreDisplay.textContent = score;
+                
+                showPowerupMessage(`CHALLENGE COMPLETE! +${dailyChallenge.bonus} POINTS`);
+                
+                // Play bonus sound
+                if (soundOn) {
+                    bonusSound.currentTime = 0;
+                    bonusSound.play().catch(e => console.log("Audio play error:", e));
+                }
+            }
+            
+            // Activate powerup
+            function activatePowerup(type, duration) {
+                powerupActive = true;
+                powerupType = type;
+                powerupEndTime = Date.now() + duration * 1000;
+                
+                let message = '';
+                switch (type) {
+                    case 'doublePoints':
+                        message = 'DOUBLE POINTS!';
+                        break;
+                    case 'slowMotion':
+                        gameContainer.classList.add('slow-motion');
+                        message = 'SLOW MOTION!';
+                        break;
+                    case 'freezeTime':
+                        message = 'TIME FREEZE!';
+                        break;
+                }
+                
+                showPowerupMessage(message);
+            }
+            
+            // End powerup
+            function endPowerup() {
+                powerupActive = false;
+                
+                if (powerupType === 'slowMotion') {
+                    gameContainer.classList.remove('slow-motion');
+                }
+                
+                // Remove powerup message
+                const powerupMsg = document.querySelector('.powerup-active');
+                if (powerupMsg) {
+                    powerupMsg.remove();
+                }
+            }
+            
+            // Show powerup message
+            function showPowerupMessage(message) {
+                // Remove existing message if any
+                const existingMsg = document.querySelector('.powerup-active');
+                if (existingMsg) {
+                    existingMsg.remove();
+                }
+                
+                const msgElement = document.createElement('div');
+                msgElement.className = 'powerup-active';
+                msgElement.textContent = message;
+                document.body.appendChild(msgElement);
+                
+                // Auto-remove after 2 seconds
+                setTimeout(() => {
+                    if (msgElement.parentNode) {
+                        msgElement.remove();
+                    }
+                }, 2000);
             }
             
             // Pause game
@@ -779,6 +1330,30 @@
                     hideMole(active.hole);
                 });
                 
+                // Calculate stats
+                const avgReaction = reactionTimes.length > 0 ? 
+                    Math.round(reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length) : 0;
+                const hitRate = molesAppeared > 0 ? 
+                    Math.round((molesWhacked / molesAppeared) * 100) : 0;
+                const helmetAccuracy = helmetMolesAppeared > 0 ? 
+                    Math.round((helmetMolesWhacked / helmetMolesAppeared) * 100) : 0;
+                
+                // Update stats display
+                avgReactionDisplay.textContent = `${avgReaction}ms`;
+                hitRateDisplay.textContent = `${hitRate}%`;
+                helmetAccuracyDisplay.textContent = `${helmetAccuracy}%`;
+                molesHitDisplay.textContent = molesWhacked;
+                
+                // Check for perfect hit achievement
+                if (hitRate === 100 && molesAppeared > 10) {
+                    unlockAchievement('perfect_hit');
+                }
+                
+                // Check for high scorer achievement
+                if (score > 1000) {
+                    unlockAchievement('high_scorer');
+                }
+                
                 // Update high scores
                 updateHighScores(score);
                 
@@ -803,6 +1378,105 @@
                 });
             }
             
+            // Check for achievements
+            function checkAchievements() {
+                // First blood
+                if (molesWhacked === 1 && !achievements.includes('first_blood')) {
+                    unlockAchievement('first_blood');
+                }
+                
+                // Speed demon (check last 3 hits)
+                if (reactionTimes.length >= 3) {
+                    const lastThree = reactionTimes.slice(-3);
+                    const totalTime = lastThree.reduce((a, b) => a + b, 0);
+                    if (totalTime <= 1000 && !achievements.includes('speed_demon')) {
+                        unlockAchievement('speed_demon');
+                    }
+                }
+                
+                // Helmet buster
+                if (helmetMolesWhacked >= 10 && !achievements.includes('helmet_buster')) {
+                    unlockAchievement('helmet_buster');
+                }
+                
+                // Combo master (check last 5 hits were successful)
+                if (molesWhacked >= 5 && (molesWhacked / molesAppeared) === 1 && 
+                    !achievements.includes('combo_master')) {
+                    unlockAchievement('combo_master');
+                }
+            }
+            
+            // Unlock achievement
+            function unlockAchievement(id) {
+                if (!achievements.includes(id)) {
+                    achievements.push(id);
+                    localStorage.setItem('whackamoleAchievements', JSON.stringify(achievements));
+                    
+                    const achievement = allAchievements.find(a => a.id === id);
+                    if (achievement) {
+                        showPowerupMessage(`ACHIEVEMENT: ${achievement.name}!`);
+                        
+                        // Update achievements display
+                        updateAchievementsDisplay();
+                    }
+                }
+            }
+            
+            // Update achievements display
+            function updateAchievementsDisplay() {
+                achievementsList.innerHTML = '';
+                
+                allAchievements.forEach(ach => {
+                    if (achievements.includes(ach.id)) {
+                        const badge = document.createElement('div');
+                        badge.className = 'badge';
+                        badge.innerHTML = `<strong>${ach.name}</strong>: ${ach.desc}`;
+                        achievementsList.appendChild(badge);
+                    }
+                });
+            }
+            
+            // Share score
+            function shareScore() {
+                const shareData = {
+                    title: 'Whack-a-Mole Score',
+                    text: `I scored ${score} points in Whack-a-Mole Arcade! Can you beat it?`,
+                    url: window.location.href
+                };
+                
+                if (navigator.share) {
+                    navigator.share(shareData).catch(err => {
+                        console.log('Error sharing:', err);
+                        copyToClipboard(shareData.text);
+                    });
+                } else {
+                    copyToClipboard(shareData.text);
+                }
+            }
+            
+            // Copy to clipboard as fallback
+            function copyToClipboard(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Score copied to clipboard!');
+            }
+            
+            // Download scorecard as image
+            function downloadScorecard() {
+                const modalContent = document.querySelector('.modal-content');
+                
+                html2canvas(modalContent).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `whackamole-score-${score}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+            
             // Event listeners
             pauseBtn.addEventListener('click', togglePause);
             restartBtn.addEventListener('click', initGame);
@@ -811,10 +1485,31 @@
                 gameOverModal.classList.remove('active');
                 initGame();
             });
+            shareBtn.addEventListener('click', shareScore);
+            downloadBtn.addEventListener('click', downloadScorecard);
+            startChallengeBtn.addEventListener('click', () => {
+                dailyChallengeModal.classList.remove('active');
+                prepareGame();
+            });
+            classicModeBtn.addEventListener('click', () => startGame('classic'));
+            dailyChallengeModeBtn.addEventListener('click', () => startGame('daily'));
+            twoPlayerModeBtn.addEventListener('click', () => startGame('multiplayer'));
             
-            // Start the game
+            // Initialize the game
             initGame();
+            
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js').then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    }).catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
         });
     </script>
 </body>
 </html>
+       
